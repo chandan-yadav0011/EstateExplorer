@@ -1,0 +1,24 @@
+
+
+@mixin sm{
+    @media (max-width: 738px)     // break point for small screen
+    {
+        @content;
+    }
+}
+
+
+@mixin md{
+    @media (max-width: 1024px)  // break point for medium screen
+    {
+        @content;
+    }
+}
+
+
+@mixin lg{
+    @media (max-width: 1366px)  // break point for large screen
+    {
+        @content;
+    }
+}

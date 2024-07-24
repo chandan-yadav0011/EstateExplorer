@@ -1,0 +1,123 @@
+@import '../../responsive.scss';
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+
+
+    a{                   // here we are giving hover effect on all the links of the navbar that is home,about,etc
+        transition: all 0.4s ease;
+
+
+        // adding responsive design for nav links here we want a small back screen to appear as a right side bar for the small screens 
+        @include sm{
+            display: none;          
+        }
+
+        &:hover{
+            scale:1.05; 
+        }
+    }
+
+
+    .left{
+        flex:3;  
+        // background-color: blanchedalmond;
+        display: flex;
+        align-items:center;
+        gap:50px;
+
+        .logo{                           // adding logo on the left side 
+                                                    
+            font-weight: bold;       // this font-weight and size is not for logo but for the "Real Estate" as it is present in logo class we are adding css for it here
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap:10px;
+
+            img{
+                width: 28px;     // now this is for the img tag in "logo class" that is our actual logo
+            }
+
+            span{
+
+                        // here we are saying to show the span tag "REAL ESTATE" for small screen and do not display for medium screens
+                @include md{
+                    display: none;
+                }
+                @include sm{
+                    display: initial;
+                }
+            }
+        }
+    }   
+
+    .right
+    {                     // this is  for the right part that is "sign in and sign up button " that is common to both
+        flex:2;
+        background-color: #fcf5f3;
+        display: flex;
+        align-items:center;
+        justify-content: flex-end;
+        height: 100%;
+
+        @include md{
+            background-color: transparent;
+        }
+
+
+        a{                                          // this is to adjust signup and sign in elements that is in <a> tag
+            padding: 12px 24px;
+            margin: 20px;
+        }
+
+        .register{
+            background-color:#fece51 ;              // this is for sing up button
+        }
+        .menuIcon{
+
+            display: none;
+            z-index: 2; // this is used because when we the right sidebar comes the menu icon gets hide  so to prevent that and make it visible .. we can put any value greater than 1.
+            img{
+                width:36px;
+                cursor: pointer;
+            }
+            @include sm{        // display menu icon for small screen
+                display: inline;
+            }
+
+
+        }
+
+        .menu{
+            position: absolute;
+            top:0;
+            right:-50%;   // this is going to be initial state when the menu icon is clicked this right should get 0 so that our side bar of menu can appear for doing this we need a boolean variable to give condition for that we have used "useSate"
+            background-color: black;
+            height:100vh;
+            color: white;
+            width: 50%; 
+            transition:all 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+
+            &.active{
+
+                right: 0;
+               
+            }
+
+            @include sm{ // this is to make the home, about , and other options appear in the side bar
+                
+                a{
+                    display: initial;
+                }
+            }
+    }
+}
+}

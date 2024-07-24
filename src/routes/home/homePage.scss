@@ -1,0 +1,55 @@
+.homePage{
+
+    display: flex;
+    height: 100%;   // this will make the hieght of bg  on the right side to be full and give the color provided below in the img
+    
+    .textContainer
+    { 
+        flex:3;
+
+        .wrapper
+        {  // this is used to wrap our heading we could have directly added padding to the right side but it will interfere with the right div background-color so we here just wrap the heading and give padding to it
+            padding-right:100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+            height: 100%; // actually the wrapper div is not occupying 100% of the background height so justify center won't work as expected sot we use this to get it the height of 100%
+            
+            .title{
+                font-size: 64px ;
+            }
+            .boxes{
+                display: flex;
+                justify-content: space-between;
+
+                h1{
+                    font-size: 36px;
+                }
+
+                h2{
+                    font-size: 20px;
+                    font-weight: 300;
+                }
+            }
+
+        }
+    }
+    
+    .imgContainer
+    {
+        flex: 2;
+        background-color: #fcf5f3; // this is the color of the background on the img side
+        position: relative;  // if we don't add here relative then it will automatically search for the closest relative parent that is body here
+        display: flex;
+        align-items: center; 
+
+
+        img{
+            width: 115%;        // this will align the background image of the right side
+            position:absolute;  // this is done to show the img overflowing from bg color effect on the right side
+            right:0;
+        }
+    }
+
+}

@@ -1,0 +1,36 @@
+@import './responsive.scss';
+
+.layout{
+   
+    height: 100vh;
+    max-width: 1366px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;  // this actually means the navbar , home page ,etc will be in a colum 
+    flex-direction: column;
+
+    @include lg{       // calling lg --> breakpoint for large screen  in responsive.css 
+        max-width: 1280px;      // here  we are adding css for the large screen .. and we have again set max-width here as we want some white spaces in left and right margin
+    }
+
+    
+    @include md{
+        max-width: 768px;
+    }
+    
+    @include sm{
+        background-color: red ;
+        max-width: 640px;
+    }
+    
+    .content{
+        //background-color: rebeccapurple;
+      //  flex: 1;
+
+       height: calc(100vh - 100px);
+    }
+    
+
+}
