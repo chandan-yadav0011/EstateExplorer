@@ -5,6 +5,7 @@ import  HomePage from './routes/home/homePage'
 import ListPage from './routes/listPage/ListPage';
 import SinglePage from './routes/SinglePage/SinglePage';
 import LoginPage from './routes/loginPage/LoginPage';
+import Profile from './routes/profilePage/Profile';
 
 
 
@@ -30,7 +31,7 @@ function App() {
           }/>  
 
           <Route  path='/:id' element={
-            <div  className='content'>
+            <div>
               <SinglePage/>
             </div>
           }/>  
@@ -42,7 +43,13 @@ function App() {
             </div>
           }/>  
 
-      
+
+          <Route  path='/profile' element={
+            <div  className='content'>
+              <Profile/>
+
+            </div>
+          }/>  
 
       </Routes>
 
