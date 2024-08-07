@@ -1,41 +1,73 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './Profile.scss'
 import List from '../../components/list/List';
 import Chat from '../../components/chat/Chat';
 
+import apiRequest from '../../lib/apiRequest';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+
+
 
 function Profile(props) {
+
+
+    const{updateUser,currentUser}= useContext(AuthContext);
+    const data  = useLoaderData();
+    console.log(data);      
+    const navigate = useNavigate();
+    console.log(data.res.data.userPosts)
+
+    const handleLogout = async()=>{
+        try {
+            await apiRequest.post("/auth/logout");
+            updateUser(null);
+            localStorage.removeItem("user")
+            navigate("/");
+          } catch (err) {    
+            console.log(err);
+          }
+    }
     return (
         <div className='profilePage'>
             <div className='details'>
                 <div className='wrapper'>
                     <div className='title'>
                         <h1>User Information</h1>
+
+                        <Link to="/profile/update">
                         <button>Update profile</button>
+                        </Link>
                     </div>
 
                     <div className='info'>
-                        <span>
+                        <span style={{display:'flex' ,flexDirection:'column'}}>
                             Avatar: 
-                            <img
-                                src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-                            />
-                            <span>Username: <b>John Doe</b></span>
-                            <span>E-mail: <b>john@gmail.com</b></span>
+                            <img src={currentUser.avatar||"/noavatar.jpg"} alt=''/>
+                            <span>Username: <b>{currentUser.username}</b></span>
+                            <span>E-mail: <b>{currentUser.email}</b></span>
+                            <button onClick={handleLogout}>Logout</button>
                         </span>
                     </div>
 
                     <div className='title'>
                         <h1>My List</h1>
-                        <button>Create New Post</button>
+                        <Link to= '/add'>
+                            <button>Create New Post</button>
+                        </Link>
                     </div>
-                    <List/>
+                    
+                   
+                       <List posts={data.res.data.userPosts}/>
+                    
 
 
                     <div className='title'>
                         <h1>Saved List</h1>
                     </div>
-                    <List/>
+                        
+                    <List posts={data.res.data.savedPosts}/>
+                   
 
 
                 </div>

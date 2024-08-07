@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "concurrency": "^0.1.4"
+  }
+}

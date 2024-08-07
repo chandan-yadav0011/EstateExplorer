@@ -1,13 +1,12 @@
 import React from 'react';
 import './list.scss'
-import { listData } from '../../lib/dummyData';
 import Card from '../card/Card';
 
-function List() {
+function List({posts}) {
     return (
         <div className='list'>
             {
-                listData.map((item)=>(
+                posts.map((item)=>(
                     <Card key={item.id} item={item}/>
                 ))
             }
