@@ -13,6 +13,7 @@ require('dotenv').config();
 app.use(express.json());
 app.use(cookieParser());
 
+const PORT = process.env.PORT||4000;
 
 //for connecting with client side 
 app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
@@ -30,7 +31,7 @@ app.use('/api/chats',chatRoute);
 app.use('/api/messages',messageRoute);
 
 
-app.listen(4000,()=>{
+app.listen(PORT,()=>{
     console.log("Sever listening on port 4000!");
 })
 
