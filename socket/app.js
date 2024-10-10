@@ -1,6 +1,8 @@
-
 import { Server } from "socket.io";
+import dotenv from 'dotenv';
+dotenv.config();
 
+const BASE_URL = process.env.BASE_URL;
 const io = new Server({
   cors: {
     origin: "http://localhost:5173",
