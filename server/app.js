@@ -17,10 +17,10 @@ app.use(cookieParser());
 //for connecting with client side 
 app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
 
-// app.get("/",(req,res)=>{
-//     res.json({message:"hii express"});
-//     console.log("hi");
-// })
+app.get("/",(req,res)=>{
+    res.json({message:"hii express"});
+    console.log("hi");
+})
 
 app.use('/api/posts',postRoute);
 app.use('/api/users',userRoute)
@@ -28,6 +28,7 @@ app.use('/api/auth',authRoute);
 app.use('/api/test',testRoute);
 app.use('/api/chats',chatRoute);
 app.use('/api/messages',messageRoute);
+
 
 app.listen(4000,()=>{
     console.log("Sever listening on port 4000!");
