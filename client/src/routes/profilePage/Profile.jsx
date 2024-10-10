@@ -14,10 +14,12 @@ function Profile(props) {
 
     const{updateUser,currentUser}= useContext(AuthContext);
     const data  = useLoaderData();
-    console.log(data);      
+    console.log(data); 
+    console.log(data.res.data.savedPosts)     
     const navigate = useNavigate();
     console.log(data.res.data.userPosts)
-
+    console.log(data.chatRes)
+    
     const handleLogout = async()=>{
         try {
             await apiRequest.post("/auth/logout");
@@ -74,7 +76,7 @@ function Profile(props) {
             </div>
             <div className='chatContainer'>
                 <div className='wrapper'>
-                    <Chat/>
+                    <Chat chats= {data.chatRes.data}/>
                 </div>
             </div>
 

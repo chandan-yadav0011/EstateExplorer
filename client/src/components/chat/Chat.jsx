@@ -1,112 +1,83 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './chat.scss'
-function Chat(props) {
+import { AuthContext } from '../../context/AuthContext';
+import apiRequest from '../../lib/apiRequest';
+import {format} from 'timeago.js'
+import { SocketContext } from '../../context/SocketContext';
+//import { message } from '../../../../server/lib/prisma';
 
-    const[chat,setChat] = useState(true);
+function Chat({chats}) {
+
+    const[chat,setChat] = useState(null);
+   // console.log(chats);
+    const {currentUser} = useContext(AuthContext);
+    const {socket} = useContext(SocketContext);
+
+    const handleSubmit=async(e)=>{
+        
+        e.preventDefault();
+
+        const formData= new FormData(e.target);
+
+        const text= formData.get('text');
+        console.log(text);
+
+        if(!text){
+            return ;
+        }
+        try{
+            
+
+            const res= await apiRequest.post('/messages/' + chat.id,{text});
+            
+            console.log(res);
+            //update message array.
+
+            setChat((prev)=>({...prev,messages:[...prev.messages,res.data]}));
+            e.target.reset()
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+
+    }
+
+    const handleOpenChat= async(id,receiver)=>
+    {
+        try{
+            const res = await apiRequest('/chats/'+id);
+            console.log(res);
+            setChat({...res.data,receiver})
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+    console.log(chat)
+
 
     return (
         <div className='chat'>
             <div className='messages'>
                 <h1>Messages</h1>
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
+                {
+                    chats.map((c)=>(
 
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
-                <div className='message'>
-                    <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                    <span>John Doe</span>
-                    <p>
-                        this is john doe
-                    </p>
-                   
-                </div>
-
+                        <div className='message' 
+                            key={c.id}
+                            onClick={()=>handleOpenChat(c.id,c.receiver)}
+                        >
+                            <img
+                                src={c.receiver.avatar||'/noavatar.jpg'}
+                                alt='img'
+                            />
+                                <span>{c.receiver.username}</span>
+                                <p>{c.lastMessage}</p>
+                        </div>  
+                    ))
+                }
 
 
 
@@ -119,57 +90,35 @@ function Chat(props) {
            {chat  &&<div className='chatBox'>
                 <div className='top'>
                     <div className='user'>
-                        <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' alt=''/>
-                        John Doe
+                        <img src={chat.receiver.avatar||'/noavatar.jpg'} alt=''/>
+                        {chat.receiver.username}
                     </div>
 
                     <span className='close' onClick={()=>{setChat(null)}}>X</span>
                 </div>
                 <div className='center'>
-                    <div className='chatMessage'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
 
-                    <div className='chatMessage own'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
+                    {
+                        chat.messages.map((msg)=>(
+                            <div className='chatMessage'
+                                style={{
+                                    alignSelf:msg.userId===currentUser.id?"flex-end":"flex-start",
+                                    textAlign:msg.userId===currentUser.id?"right":"left"
+                                }} 
+                                key={msg.id}
+                            >
+                                <p>{msg.text}</p>
+                                <span>{format(msg.createdAt)}</span>
+                            </div>
+                        ))
+                    }
 
-                    <div className='chatMessage'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
-
-                    <div className='chatMessage own'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
-
-                    <div className='chatMessage'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
-
-                    <div className='chatMessage own'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
-
-                    <div className='chatMessage'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
-
-                    <div className='chatMessage own'>
-                        <p>hello</p>
-                        <span>1 hour ago</span>
-                    </div>
+                    
                 </div>
-                <div className='bottom'>
-                    <textarea></textarea>
+                <form onSubmit={handleSubmit} className='bottom'>
+                    <textarea name='text'></textarea>
                     <button>Send</button>
-                </div>
+                </form>
             </div>}
             
         </div>

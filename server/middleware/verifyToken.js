@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 
 
 exports.verifyToken = (req, res, next) => {
+  console.log("inside verify")
   const token = req.cookies.token;
 
   //console.log(token);
@@ -18,11 +19,12 @@ exports.verifyToken = (req, res, next) => {
     {
       const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
       req.userId=decode.id; 
+      console.log("going out of verify")
       next();
     }
     catch(err)
     {
-        res.json( 
+       return  res.json( 
             {
               success:false,
               message:"invalid token",

@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 
+
 function SinglePage() {
   const post = useLoaderData();
   console.log(post)
@@ -14,14 +15,45 @@ function SinglePage() {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSave = async () => {
+
+  const handleChat= async() =>{
+    
+    const receiver = post.userId;
+
+    try{
+
+      await apiRequest.post('/chats',{"receiverId":receiver});
+
+      console.log("chat added successfully");
+    }
+    catch(err)
+    {
+        console.log("error in adding chat");
+    }
+    
+
+
+    
+
+
+  }
+  const handleSave = async () => {  
     if (!currentUser) {
       navigate("/login");
     }
-    // AFTER REACT 19 UPDATE TO USEOPTIMISTIK HOOK
+
+    console.log("current_user:",currentUser);
+    // AFTER REACT 19 UPDATE TO USE OPTIMISTIK HOOK
     setSaved((prev) => !prev);
     try {
-      await apiRequest.post("/users/save", { postId: post.id });
+      console.log("SS1");
+      console.log("inside single page")
+      console.log(post.id);
+
+      const rsp= await apiRequest.post("/users/save", { postId: post.id});
+
+      console.log(rsp);
+
     } catch (err) {
       console.log(err);
       setSaved((prev) => !prev);
@@ -140,7 +172,11 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleChat}
+              style={{
+                backgroundColor:"#fece51"
+
+              }}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>

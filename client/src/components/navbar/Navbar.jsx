@@ -33,7 +33,7 @@ function Navbar(props) {
                         <img src={currentUser.avatar||"/noavatar.jpg"} alt=''/>
                         <span>{currentUser.username}</span>
                         <Link to ="/profile" className='profile'>
-                            <div className='notification'>3</div>
+                            
                             <span>Profile</span>
                         </Link>
 
@@ -46,7 +46,7 @@ function Navbar(props) {
                 <div className='menuIcon'>
                     <img 
                      src='/menu.png' 
-                     onClick={()=>{setOpen(!open)}}
+                     onClick={()=>setOpen((prev)=>!prev)}
                      />
                 </div>
 
