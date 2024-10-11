@@ -16,7 +16,7 @@ app.use(cookieParser());
 const PORT = process.env.PORT||4000;
 
 //for connecting with client side 
-app.use(cors({origin:process.env.CLIENT_URL, credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
+app.use(cors({origin:process.env.CLIENT_URL || "http://localhost:5173",  credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
 
 app.get("/",(req,res)=>{
     res.json({message:"hii express"});
