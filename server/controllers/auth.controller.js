@@ -78,9 +78,12 @@ exports.login = async (req, res) => {
     //   console.log("decode: ",decode)
     // //----------------------
 
+    console.log(token)
 
     const { password: userPassword, ...userInfo } = user;
-    
+
+    console.log("hello")
+
     return res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
