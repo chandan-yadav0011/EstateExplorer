@@ -6,7 +6,12 @@ const cookieParser = require('cookie-parser');
 
 exports.verifyToken = (req, res, next) => {
   console.log("inside verify")
+
+  
+
   const token = req.cookies.token;
+
+  return res.json({message:`token is :${token}`})
 
   //console.log(token);
   if (!token) {
