@@ -16,7 +16,26 @@ app.use(cookieParser());
 const PORT = process.env.PORT||4000;
 
 //for connecting with client side 
-app.use(cors({origin:process.env.CLIENT_URL || "http://localhost:5173",  credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
+const allowedOrigins = [
+    "http://localhost:5173",               // Local development
+    "https://realestatexplorer.netlify.app" // Netlify production site
+  ];
+  
+  const corsOptions = {
+    origin: function (origin, callback) {
+      // Check if origin is in the allowedOrigins array
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, // Allow cookies and credentials to be shared
+  };
+  
+  app.use(cors(corsOptions));
+  
+//app.use(cors({origin:process.env.CLIENT_URL || "http://localhost:5173",  credentials:true}));   // this credentials : true will help us sending the cookie to the client side.
 
 app.get("/",(req,res)=>{
     res.json({message:"hii express"});
