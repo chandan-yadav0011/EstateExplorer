@@ -48,6 +48,7 @@ exports.login = async (req, res) => {
 
     if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
 
+
     // CHECK IF THE PASSWORD IS CORRECT
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -74,7 +75,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,options);
     
-    
+
     // //-----------------------
     //   const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
     //   console.log("decode: ",decode)
