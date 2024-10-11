@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
-const cookieParser = require('cookie-parser');
 
 
 
@@ -10,6 +9,8 @@ exports.verifyToken = (req, res, next) => {
   
 
   const token = req.cookies.token;
+
+
   console.log(token);
 
 
