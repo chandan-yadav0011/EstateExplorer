@@ -37,7 +37,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   
-
+  return res.json({message:"trying to login!!!"})
   try {
     // CHECK IF THE USER  EXISTS
 
