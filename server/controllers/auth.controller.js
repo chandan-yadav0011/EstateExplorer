@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
     //console.log("payload: ",payload.id);
 
     const options ={
-        expiresIn: '3d'
+        expiresIn: '5m'
     }
 
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,options);
