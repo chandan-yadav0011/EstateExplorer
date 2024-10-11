@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
   try {
     // CHECK IF THE USER  EXISTS
 
-    return res.json({message:"inside login!!!!"})
+   // return res.json({message:"inside login!!!!"})
     const user = await prisma.user.findUnique({
       where: { username },
     });
@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,options);
     
-
+    
     // //-----------------------
     //   const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
     //   console.log("decode: ",decode)
