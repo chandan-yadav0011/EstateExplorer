@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
     // GENERATE COOKIE TOKEN AND SEND TO THE USER
 
     // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
-    const age = 1000 * 60 * 60 * 24 * 7;
+    // const age = 1000 * 60 * 60 * 24 * 7;
 
    // console.log("user information",user);
     const payload = {
@@ -67,10 +67,11 @@ exports.login = async (req, res) => {
     //console.log("payload: ",payload.id);
 
     const options ={
-        expiresIn: age
+        expiresIn: '3d'
     }
 
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,options);
+    
 
     // //-----------------------
     //   const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
@@ -82,6 +83,7 @@ exports.login = async (req, res) => {
     
     return res.cookie("token", token, {
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: age,
       })
       .status(200)
