@@ -2,10 +2,11 @@ import { Server } from "socket.io";
 import dotenv from 'dotenv';
 dotenv.config();
 
+const PORT = process.env.PORT||8800;
 const BASE_URL = process.env.BASE_URL;
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "https://genuine-sable-722035.netlify.app/",
   },
 });
 
@@ -45,4 +46,4 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("8800");
+io.listen(PORT);
