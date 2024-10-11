@@ -6,7 +6,7 @@ const PORT = process.env.PORT||8800;
 const BASE_URL = process.env.BASE_URL;
 const io = new Server({
   cors: {
-    origin: process.env.FRONTEND_URL || "https://genuine-sable-722035.netlify.app/",
+    origin:"https://genuine-sable-722035.netlify.app/",
   },
 });
 
