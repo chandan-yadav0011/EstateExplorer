@@ -11,7 +11,7 @@ exports.verifyToken = (req, res, next) => {
 
   const token = req.cookies.token;
 
-  return res.json({message:`token is :${token}`})
+
 
   //console.log(token);
   if (!token) {
