@@ -36,10 +36,12 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+  
 
   try {
-    // CHECK IF THE USER EXISTS
+    // CHECK IF THE USER  EXISTS
 
+    return res.json({message:"inside login!!!!"})
     const user = await prisma.user.findUnique({
       where: { username },
     });
