@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
     // GENERATE COOKIE TOKEN AND SEND TO THE USER
 
     // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
-    // const age = 1000 * 60 * 60 * 24 * 7;
+     const age = 1000 * 60 *5;
 
    // console.log("user information",user);
     const payload = {
@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
     //console.log("payload: ",payload.id);
 
     const options ={
-        expiresIn: '5m'
+        expiresIn: age
     }
 
     const token = jwt.sign(payload,process.env.JWT_SECRET_KEY,options);
